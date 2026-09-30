@@ -7,7 +7,7 @@ verify mtp32 = 12 joins, -36 calls). The repair tail's k_norm (no
 hadamard/act_quant/weights_proj siblings) and draft1 (no indexer query)
 pass through. extern cuBLASLt calls (dsa_wq_b/dsa_wk/dsa_kpool_gate),
 dsa_logits and dsa_topk are NOT touched: cuBLASLt BF16 GEMMs are
-M-dependent (Hubble root cause) and topk fusion is policy-frozen.
+M-dependent (root-caused) and topk fusion is policy-frozen.
 
 Bitwise by construction; see the glm53_slab2.cu header for the per-phase
 provenance (k_norm/weights_proj verbatim glm53_dsa.cu; hadamard+quant
@@ -20,7 +20,7 @@ Integration: gen.py calls fuse_round_manifest(m) in the MTP section (after
 extend_manifest; order-tolerant w.r.t. the mHC/MoE/KDA round passes).
 phases=('glue',) is the shipped transform. phases=('glue','gemm') is the
 extension point for the cuBLASLt segment (wq_b/wk/kgate + logits), pending
-Hubble's algo-lock making those GEMMs M-invariant bitwise; it raises
+the algo-lock making those GEMMs M-invariant bitwise; it raises
 NotImplementedError until that lands.
 """
 import copy
@@ -59,7 +59,7 @@ def fuse_round_manifest(m, *, phases=('glue',), program='round_k2',
     if 'gemm' in phases:
         raise NotImplementedError(
             'cuBLASLt segment fold (wq_b/wk/kgate + logits) waits on '
-            "Hubble's algo-lock M-invariance result")
+            "the algo-lock M-invariance result")
     assert m['vars']['tokens']['max'] == 32 and m['vars']['seqs']['max'] == 16
     calls = m['programs'][program]['calls']
     if any(c['label'].startswith('probe.') for c in calls):

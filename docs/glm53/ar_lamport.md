@@ -294,17 +294,17 @@ target/release/kern-serve \
   --weights weights/GLM-5.3-Flash \
   --gpus 0,1,2,3,4,5,6,7 --port 8000 --capacity 2000000 --max-seqs 64
 # In a second shell, with the same no_proxy setting:
-python3 our parity check script
+python3 parity_check.py  # our parity checker
 ```
 
-The script is at `our parity check script`, not inside vprobe.
+The parity checker is a standalone script, not part of the probe tooling.
 Require code **40/40**, agentic **33/33**. Source inspection shows these are
 **word** prefix counts, not characters; the oracle texts contain 201 and
 220 characters respectively. The script prints rather than asserts, and
 uses the smaller word count as denominator. Also require the full generated
 strings to equal `oracle/{code,agentic}.json` response.text, not just the
 printed ratio. Keep France/Chinese output for diagnosis. On a failure, use
-our `teacher_forced.py` and `compare_vprobe.py` probe scripts to find
+our `teacher_forced.py` and `compare.py` probe scripts to find
 the first intermediate divergence. Do not use NCCL-ring output as the
 bit-level AR oracle: the numeric change is intentional (arch_decode R4).
 
@@ -331,4 +331,3 @@ The release kern target was built at `<cargo target dir>`.
 No other source files were changed. No GPU validation, measured latency,
 P2 fusion, runtime patch, host status policy, server restart, or baseline
 manifest rewrite was done. GPU bit equality and <=6 us remain open gates.
-

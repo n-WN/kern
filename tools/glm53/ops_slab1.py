@@ -242,7 +242,7 @@ def _vz_rewrite(m):
 
 def _z2s_rewrite(m, zw):
     """v4 stage-B (z2s): replace spec_kda_fused_v3's impl with the prep-sharing
-    z-split kernel (Banach 2026-09-28, 78/78 gates; isolated -239/-257/-192us
+    z-split kernel (2026-09-28, 78/78 gates; isolated -239/-257/-192us
     per round at S=1/4/8 for zw=4).
 
     Same op-def-swap discipline as _vz_rewrite: params and every call site
@@ -282,7 +282,7 @@ def _z2s_rewrite(m, zw):
     return m
 
 
-# Lamport AR multi-edge PDL (owner green-light 2026-09-28; Noether's 8-mode
+# Lamport AR multi-edge PDL (green-lit 2026-09-28; 8-mode
 # A/B proved serving graphs preserve PDL semantics, runtime accepted 2-PDL
 # chains in v0.3). Two edge sets, both pure op-def rewrites:
 #

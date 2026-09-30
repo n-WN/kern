@@ -1,4 +1,4 @@
-// DSA absorb rows-scaling fix (Banach 2026-09-28): v2 re-reads the weight
+// DSA absorb rows-scaling fix (2026-09-28): v2 re-reads the weight
 // slice per 4-row group and is latency-bound at low occupancy. v3 covers R
 // rows per CTA (same per-output math: same k-loop, same fmaf order, same
 // warp_sum tree, same rn conversion -> bitwise identical outputs).
