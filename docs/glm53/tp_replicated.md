@@ -78,7 +78,7 @@ without a gather before embedding or a redistribution after argmax.
 - Regenerate both JSON files after compiling changed CUDA sources with nvcc
   (compilation only); pass `--bundle kernels-glm53` to preserve content-addressed
   artifacts. Run the kern-manifest `verify` example on both files and
-  our bind-check script on production.
+  our bind-check script on the serving deployment.
 
 ## Remaining device checks
 

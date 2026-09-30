@@ -1,4 +1,4 @@
-# GLM-5.3 decode mHC fusion (Riemann-mHC)
+# GLM-5.3 decode mHC fusion
 
 Date: 2026-09-26. Scope: TP8, H100/H800 sm_90a, decode groups 1..16,
 rows=1, hidden=4096, four residual streams. Existing sources and manifests

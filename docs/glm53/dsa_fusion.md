@@ -1,4 +1,4 @@
-# DSA decode fusion v2 — Hodge-DSA
+# DSA decode fusion v2
 
 Date: 2026-09-26. Host: **the bring-up node only**. Model: GLM-5.3-Flash,
 TP8, H100 sm_90a. Decode: groups 1..16, one row per group.

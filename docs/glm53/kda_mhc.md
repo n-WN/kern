@@ -28,7 +28,7 @@ Code (all under `<sglang site-packages>/`):
 - `sglang/srt/models/deepseek_common/amd/deepseek_v4_fused_mhc.py` → `fused_mhc.py:N`
 - `deep_gemm/include/deep_gemm/impls/sm90_tf32_hc_prenorm_gemm.cuh` → `prenorm.cuh:N`
 - Checkpoint tensor list: `$GLM53_ARTIFACTS/inventory.json`; model config: `config.json` in the `zai-org/GLM-5.3-Flash` snapshot.
-- Serve command: `our sglang launch script` (`--tp 8 --mem-fraction-static 0.80`, no spec decode).
+- Serve command: our sglang launch script (`--tp 8 --mem-fraction-static 0.80`, no spec decode).
 
 ## 1. Model constants (config.json + cfg_glm5_next.py)
 
