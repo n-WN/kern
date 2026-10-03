@@ -34,7 +34,7 @@ Code (under `<sglang site-packages>/`):
 - `sglang/srt/layers/logits_processor.py` / `sglang/srt/layers/sampler.py` → `logits_processor.py:N` / `sampler.py:N`
 - `deep_gemm/include/deep_gemm/impls/sm90_fp8_gemm_1d2d.cuh` → `fp8_1d2d.cuh:N`
 - Checkpoint inventory `$GLM53_ARTIFACTS/inventory.json` (cited `inventory`),
-  config `config.json` in the `zai-org/GLM-5.3-Flash` snapshot (cited `config.json`).
+  config `config.json` in the `$GLM53_CHECKPOINT` snapshot (cited `config.json`).
 
 ## 1. Constants for this path (config.json)
 

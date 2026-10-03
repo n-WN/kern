@@ -9,7 +9,7 @@ File references live under $GLM53_ARTIFACTS unless noted.
 
 ## 0. Environment and provenance
 
-- Server: `sglang.launch_server --model-path zai-org/GLM-5.3-Flash --tp 8` (our sglang launch script).
+- Server: `sglang.launch_server --model-path "$GLM53_CHECKPOINT" --tp 8` (our sglang launch script).
 - sglang: `0.5.6.post3.dev11186+gcf5df8268` at `<sglang site-packages>/sglang/` (a fork of upstream sglang; this tree contains the kpool/DSA extensions used below).
 - sgl-kernel: `0.3.21` (compiled ops in `sgl_kernel/flash_ops.abi3.so` and JIT `.cuh` files under `sglang/kernels/jit/csrc/`).
 - deep_gemm package: `<sglang site-packages>/deep_gemm/` (headers under `include/deep_gemm/`).
@@ -18,7 +18,7 @@ File references live under $GLM53_ARTIFACTS unless noted.
 
 ## 1. Model facts used in this spec
 
-From `config.json` in the `zai-org/GLM-5.3-Flash` snapshot:
+From `config.json` in the `$GLM53_CHECKPOINT` snapshot:
 
 - 45 layers (`num_hidden_layers`); `layer_types` puts `deepseek_sparse_attention` at layers {3,7,11,15,19,23,27,31,35,39,43}; all other layers are `linear_attention` (KDA).
 - hidden 4096; `num_attention_heads` 64; `qk_nope_head_dim` 256; `qk_rope_head_dim` 0 (NoPE); `v_head_dim` 256; `q_lora_rank` 1536; `kv_lora_rank` 512; `mla_use_nope` true.
