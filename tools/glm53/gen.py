@@ -459,10 +459,13 @@ def resolve_modules(allops):
                 continue
             name, sha = launch["cubin"], launch["sha256"]
             if (name, sha) not in checked:
-                matches = [p.resolve() for d in (ops_common.DUMP_DIR, ops_common.HAND_DIR)
-                           if (p := d / name).is_file() and hashlib.sha256(p.read_bytes()).hexdigest() == sha]
+                path = pathlib.Path(name)
+                candidates = ([path] if path.is_absolute() else
+                              [d / path for d in (ops_common.DUMP_DIR, ops_common.HAND_DIR)])
+                matches = {p.resolve() for p in candidates
+                           if p.is_file() and hashlib.sha256(p.read_bytes()).hexdigest() == sha}
                 assert len(matches) == 1, f"{name}: expected one artifact with pinned sha256 {sha}"
-                checked[name, sha] = str(matches[0])
+                checked[name, sha] = str(next(iter(matches)))
             launch["cubin"] = checked[name, sha]
 
 
@@ -713,6 +716,9 @@ def build(layers=LAYERS, probes=False, allreduce="lamport", ar_pdl=False, moe="v
     if arpdl:
         import os as _os
         _os.environ.setdefault("GLM53_PDL_MAX", "64")
+    # Round fusers can add new handwritten launches after the initial pass.
+    # Resolve those too, before normalize records their portable module sources.
+    resolve_modules(m["ops"])
     lower_wire(m)
     return normalize(m)
 

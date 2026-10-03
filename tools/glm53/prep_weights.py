@@ -14,15 +14,15 @@ Derived tensors (all verified against sglang's loaders):
     P.self_attn.indexer.weights_proj_f32 f32 [32,4096]
     P.self_attn.indexer.ape_f32        f32 [4,128]    (index_kpool_compress_ape)
   per KDA layer i:
-    P.self_attn.conv1d_merged_f32  f32 [3072,4]  q|k|v conv1d rows concat
-                                  ([8192,1,4] each -> [3072,4], f32)
+    P.self_attn.conv1d_merged_f32  f32 [24576,4]  q|k|v conv1d rows concat
+                                  ([8192,1,4] each -> [24576,4], f32)
   every layer i in 0..44:
     P.hc_attn_fn_f32  f32 [24,16384]
     P.hc_ffn_fn_f32   f32 [24,16384]
 """
-import glob
 import json
 import os
+import pathlib
 
 import torch
 from safetensors import safe_open
@@ -64,7 +64,7 @@ def main():
     for i in KDA:
         p = f"{LM}layers.{i}.self_attn."
         parts = [get(p + f"{t}_conv1d.weight").squeeze(1) for t in ("q", "k", "v")]
-        out[p + "conv1d_merged_f32"] = torch.cat(parts, 0).to(torch.float32)  # [3072,4]
+        out[p + "conv1d_merged_f32"] = torch.cat(parts, 0).to(torch.float32)  # [24576,4]
 
     for i in range(45):
         p = f"{LM}layers.{i}."
